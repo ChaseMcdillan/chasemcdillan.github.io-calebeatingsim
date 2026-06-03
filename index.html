@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Caleb Eating Sim - v0.5</title>
+    <title>Caleb Eating Sim - v0.4</title>
     <style>
         * {
             margin: 0;
@@ -41,14 +41,17 @@
         }
 
         .clevis-logo-large .logo-icon {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
             border-radius: 25px;
-            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
             margin: 0 auto 1rem;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             animation: pulse 1.5s infinite;
-            display: block;
         }
 
         @keyframes pulse {
@@ -94,7 +97,7 @@
             background: linear-gradient(135deg, #0f0c1f 0%, #1a1a2e 100%);
         }
 
-        /* Header with Square Clevis Logo */
+        /* Header with Clevis Logo Button */
         .header {
             display: flex;
             justify-content: center;
@@ -104,7 +107,7 @@
         .clevis-btn {
             background: linear-gradient(135deg, rgba(255,107,107,0.2), rgba(254,202,87,0.2));
             border: 1px solid rgba(255,107,107,0.3);
-            border-radius: 20px;
+            border-radius: 60px;
             padding: 8px 20px;
             display: inline-flex;
             align-items: center;
@@ -120,10 +123,14 @@
         }
 
         .clevis-logo-small {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
             border-radius: 12px;
-            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
         }
 
         .clevis-btn span {
@@ -175,7 +182,7 @@
             color: transparent;
         }
 
-        /* EAT FOOD Button */
+        /* EAT FOOD Button - Hero */
         .eat-button-container {
             display: flex;
             justify-content: center;
@@ -222,7 +229,6 @@
             background: rgba(255,255,255,0.03);
             border-radius: 60px;
             padding: 4px;
-            flex-wrap: wrap;
         }
 
         .tab-btn {
@@ -233,7 +239,7 @@
             border-radius: 40px;
             color: #a0a0b0;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.2s;
         }
@@ -243,6 +249,7 @@
             color: #1a1a2e;
         }
 
+        /* Tab Content */
         .tab-content {
             display: none;
             animation: fadeIn 0.3s ease;
@@ -262,8 +269,6 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: 400px;
-            overflow-y: auto;
         }
 
         .building-item {
@@ -284,12 +289,12 @@
         }
 
         .building-info h4 {
-            font-size: 0.9rem;
+            font-size: 1rem;
             margin-bottom: 4px;
         }
 
         .building-info p {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: #a0a0b0;
         }
 
@@ -303,96 +308,63 @@
         }
 
         .building-cost .level {
-            font-size: 0.65rem;
-            color: #ff6b6b;
-        }
-
-        .locked {
-            opacity: 0.5;
-            filter: grayscale(0.3);
-        }
-
-        /* Finance Tab */
-        .finance-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 16px;
-        }
-
-        .loan-btn, .invest-btn {
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
-            border: none;
-            padding: 12px 20px;
-            border-radius: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 12px;
-        }
-
-        .loan-btn:active, .invest-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* Casino */
-        .casino-game {
-            background: rgba(255,255,255,0.05);
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 16px;
-        }
-
-        .bet-input {
-            background: #1a1a2e;
-            border: 1px solid #ff6b6b;
-            padding: 10px;
-            border-radius: 12px;
-            color: white;
-            width: 100px;
-            text-align: center;
-            margin: 10px;
-        }
-
-        /* Stock Market */
-        .stock-item {
-            background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 12px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .stock-buy-btn {
-            background: #2ecc71;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-
-        /* Prestige Button */
-        .prestige-btn {
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
-            border: none;
-            padding: 16px;
-            border-radius: 40px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .warning-text {
             font-size: 0.7rem;
             color: #ff6b6b;
-            margin-top: 8px;
         }
 
+        /* Ferrari Shop */
+        .ferrari-card {
+            background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(254,202,87,0.05));
+            border-radius: 24px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid rgba(255,107,107,0.2);
+        }
+
+        .ferrari-emoji {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        .ferrari-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #feca57;
+            margin: 12px 0;
+        }
+
+        .buy-ferrari-btn {
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #1a1a2e;
+            transition: transform 0.1s;
+        }
+
+        .buy-ferrari-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Stats Tab */
+        .stats-tab {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-row {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* News Ticker */
         .news-ticker {
             background: rgba(0,0,0,0.4);
             border-radius: 40px;
@@ -414,6 +386,7 @@
             100% { transform: translateX(-100%); }
         }
 
+        /* Photo placeholder */
         .photo-placeholder {
             margin-top: 20px;
             background: rgba(255,255,255,0.03);
@@ -422,13 +395,26 @@
             text-align: center;
             border: 1px dashed rgba(255,107,107,0.3);
         }
+
+        .photo-placeholder img {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+
+        /* Production per second indicator */
+        .food-per-sec {
+            font-size: 0.7rem;
+            color: #a0a0b0;
+            margin-top: 4px;
+        }
     </style>
 </head>
 <body>
 
+<!-- LOADING SCREEN -->
 <div id="loadingScreen">
     <div class="clevis-logo-large">
-        <img src="assets/clevis-logo.png" class="logo-icon" alt="Clevis Studios Logo">
+        <div class="logo-icon">🍽️</div>
         <h1>Clevis Studios</h1>
     </div>
     <div class="loading-bar-container">
@@ -437,18 +423,22 @@
     <div id="loadingText">Loading...</div>
 </div>
 
+<!-- MAIN GAME -->
 <div id="gameContainer">
+    <!-- Header with Clevis Logo -->
     <div class="header">
         <div class="clevis-btn" id="clevisBtn">
-            <img src="assets/clevis-logo.png" class="clevis-logo-small" alt="Clevis Studios">
+            <div class="clevis-logo-small">🎮</div>
             <span>Clevis Studio</span>
         </div>
     </div>
 
+    <!-- News Ticker -->
     <div class="news-ticker">
         <div class="ticker-content" id="ticker"></div>
     </div>
 
+    <!-- Stats Grid -->
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-emoji">🍕</div>
@@ -467,11 +457,12 @@
         </div>
         <div class="stat-card">
             <div class="stat-emoji">⭐</div>
-            <div class="stat-label">Prestige</div>
-            <div class="stat-value" id="prestigeLevel">0</div>
+            <div class="stat-label">Rep</div>
+            <div class="stat-value" id="repAmount">0</div>
         </div>
     </div>
 
+    <!-- EAT FOOD Button -->
     <div class="eat-button-container">
         <button class="eat-btn" id="eatBtn">
             <div class="eat-emoji">🍽️</div>
@@ -479,118 +470,100 @@
         </button>
     </div>
 
+    <!-- Tabs -->
     <div class="tabs">
         <button class="tab-btn active" data-tab="buildings">🏢 Buildings</button>
         <button class="tab-btn" data-tab="finance">💰 Finance</button>
-        <button class="tab-btn" data-tab="stocks">📈 Stocks</button>
-        <button class="tab-btn" data-tab="casino">🎰 Casino</button>
+        <button class="tab-btn" data-tab="ferrari">🏎️ Ferrari Shop</button>
         <button class="tab-btn" data-tab="stats">📊 Stats</button>
     </div>
 
     <!-- BUILDINGS TAB -->
     <div id="tab-buildings" class="tab-content active">
         <div class="buildings-grid" id="buildingsGrid"></div>
-        <div class="photo-placeholder">
-            <div>🏗️ Build your empire!</div>
+        <div class="photo-placeholder" id="buildingsPhoto">
+            <img id="buildingsImg" src="" alt="Building photo" style="display: none;">
+            <div id="buildingsPhotoText">🏭 Your empire grows here</div>
         </div>
     </div>
 
     <!-- FINANCE TAB -->
     <div id="tab-finance" class="tab-content">
-        <div class="finance-card" id="bankCard">
-            <h3>🏦 Bank & Loans</h3>
-            <p id="bankStatus">🔒 Requires Investment Bank (Level 1)</p>
-            <div id="bankContent" style="display: none;">
-                <p>Current Loan: $<span id="currentLoan">0</span></p>
-                <p>Debt: $<span id="currentDebt">0</span> (+10% interest)</p>
-                <button class="loan-btn" id="takeLoanBtn">💰 Take $1000 Loan</button>
-                <button class="loan-btn" id="repayLoanBtn">💸 Repay $500</button>
+        <div class="stats-tab">
+            <div class="stat-row">
+                <span>💰 Total Money</span>
+                <strong id="moneyDisplay">$0</strong>
+            </div>
+            <div class="stat-row">
+                <span>🍕 Total Food Eaten</span>
+                <strong id="totalEaten">0</strong>
+            </div>
+            <div class="stat-row">
+                <span>🏎️ Ferrari Bonus</span>
+                <strong id="ferrariBonus">0%</strong>
             </div>
         </div>
-        <div class="finance-card" id="gardenCard">
-            <h3>🌱 Garden</h3>
-            <p id="gardenStatus">🔒 Requires Garden (Level 1)</p>
-            <div id="gardenContent" style="display: none;">
-                <p>Plants: <span id="plants">0</span></p>
-                <p>Each plant gives +5 food/sec</p>
-                <button class="invest-btn" id="plantBtn">🌿 Plant Seed ($200)</button>
-                <button class="invest-btn" id="harvestBtn">🍎 Harvest ($1000)</button>
-            </div>
+        <div class="photo-placeholder">
+            <img id="financeImg" src="" alt="Finance photo" style="display: none;">
+            <div id="financePhotoText">📈 Stock market coming soon</div>
         </div>
     </div>
 
-    <!-- STOCKS TAB -->
-    <div id="tab-stocks" class="tab-content">
-        <div class="finance-card" id="stocksCard">
-            <h3>📈 Stock Market</h3>
-            <p id="stocksStatus">🔒 Requires Stock Exchange (Level 1)</p>
-            <div id="stocksContent" style="display: none;">
-                <div id="stocksList"></div>
-                <p>Your Portfolio: $<span id="portfolioValue">0</span></p>
-            </div>
+    <!-- FERRARI SHOP TAB -->
+    <div id="tab-ferrari" class="tab-content">
+        <div class="ferrari-card">
+            <div class="ferrari-emoji">🏎️✨</div>
+            <h3>Ferrari Investment</h3>
+            <p>Each Ferrari increases food production by 2%</p>
+            <div class="ferrari-price">$5 = 500 Ferraris</div>
+            <button class="buy-ferrari-btn" id="buyFerrariBtn">💸 PURCHASE</button>
         </div>
-    </div>
-
-    <!-- CASINO TAB -->
-    <div id="tab-casino" class="tab-content">
-        <div class="finance-card" id="casinoCard">
-            <h3>🎰 Casino</h3>
-            <p id="casinoStatus">🔒 Requires Casino (Level 1)</p>
-            <div id="casinoContent" style="display: none;">
-                <div class="casino-game">
-                    <h4>💰 Coin Flip</h4>
-                    <input type="number" id="betAmount" class="bet-input" placeholder="Bet $" value="100">
-                    <button class="loan-btn" id="flipCoinBtn">🪙 Flip Coin</button>
-                    <p id="flipResult"></p>
-                </div>
-                <div class="casino-game">
-                    <h4>🎰 Slots</h4>
-                    <button class="loan-btn" id="spinSlotsBtn">🎰 Spin ($50)</button>
-                    <p id="slotsResult"></p>
-                </div>
-            </div>
+        <div class="photo-placeholder" style="margin-top: 16px;">
+            <img id="ferrariImg" src="" alt="Ferrari photo" style="display: none;">
+            <div id="ferrariPhotoText">🏎️ Your dream garage</div>
         </div>
     </div>
 
     <!-- STATS TAB -->
     <div id="tab-stats" class="tab-content">
-        <div class="finance-card">
-            <h3>📊 Game Statistics</h3>
-            <p>👤 Username: <span id="usernameDisplay">Player</span></p>
-            <p>🍕 Total Food Eaten: <span id="totalEaten">0</span></p>
-            <p>🏎️ Ferraris Owned: <span id="statsFerraris">0</span></p>
-            <p>💰 Total Money Earned: $<span id="totalMoney">0</span></p>
-            <p>⭐ Prestige Tokens: <span id="prestigeTokens">0</span></p>
-            <p>⚡ Prestige Bonus: <span id="prestigeBonus">0</span>x</p>
+        <div class="stats-tab">
+            <div class="stat-row">
+                <span>👤 Username</span>
+                <strong id="usernameDisplay">Player</strong>
+            </div>
+            <div class="stat-row">
+                <span>📅 Version</span>
+                <strong>v0.4</strong>
+            </div>
+            <div class="stat-row">
+                <span>🏆 Buildings Owned</span>
+                <strong id="totalBuildings">0</strong>
+            </div>
+            <div class="stat-row">
+                <span>⚡ Production Multiplier</span>
+                <strong id="totalMultiplier">1x</strong>
+            </div>
         </div>
-        <button class="prestige-btn" id="prestigeBtn">✨ PRESTIGE ✨</button>
-        <div class="warning-text">⚠️ Prestige resets all progress but gives permanent 2x multiplier per token!</div>
+        <div class="photo-placeholder">
+            <img id="statsImg" src="" alt="Stats photo" style="display: none;">
+            <div id="statsPhotoText">📋 Achievement progress</div>
+        </div>
     </div>
 </div>
 
 <script>
-    // GAME STATE
+    // ========== GAME STATE ==========
     let gameState = {
         username: "Player",
         food: 0,
-        money: 0,
         ferraris: 0,
-        prestigeTokens: 0,
+        rep: 0,
         totalFoodEaten: 0,
-        totalMoneyEarned: 0,
-        currentLoan: 0,
-        currentDebt: 0,
-        plants: 0,
-        portfolio: {},
         buildings: {
-            pizzaOven: { level: 0, baseCost: 10, baseProduction: 1, unlocked: true },
-            buffetLine: { level: 0, baseCost: 50, baseProduction: 5, unlocked: true },
-            restaurant: { level: 0, baseCost: 200, baseProduction: 20, unlocked: true },
-            factory: { level: 0, baseCost: 1000, baseProduction: 100, unlocked: true },
-            casino: { level: 0, baseCost: 5000, baseProduction: 0, unlocked: false, special: "casino" },
-            stockExchange: { level: 0, baseCost: 8000, baseProduction: 0, unlocked: false, special: "stocks" },
-            garden: { level: 0, baseCost: 3000, baseProduction: 0, unlocked: false, special: "garden" },
-            investmentBank: { level: 0, baseCost: 10000, baseProduction: 0, unlocked: false, special: "bank" }
+            pizzaOven: { level: 0, baseCost: 10, baseProduction: 1 },
+            buffetLine: { level: 0, baseCost: 50, baseProduction: 5 },
+            restaurant: { level: 0, baseCost: 200, baseProduction: 20 },
+            factory: { level: 0, baseCost: 1000, baseProduction: 100 }
         },
         lastSave: Date.now()
     };
@@ -599,60 +572,57 @@
         pizzaOven: { name: "🍕 Pizza Oven", baseCost: 10, baseProduction: 1, emoji: "🔥" },
         buffetLine: { name: "🍽️ Buffet Line", baseCost: 50, baseProduction: 5, emoji: "🍚" },
         restaurant: { name: "🏢 Restaurant", baseCost: 200, baseProduction: 20, emoji: "🍷" },
-        factory: { name: "🏭 Food Factory", baseCost: 1000, baseProduction: 100, emoji: "⚙️" },
-        casino: { name: "🎰 Casino", baseCost: 5000, baseProduction: 0, emoji: "🎲", special: "Unlocks Casino games!" },
-        stockExchange: { name: "📈 Stock Exchange", baseCost: 8000, baseProduction: 0, emoji: "📊", special: "Unlocks Stock Market!" },
-        garden: { name: "🌱 Garden", baseCost: 3000, baseProduction: 0, emoji: "🌸", special: "Grow plants for passive income!" },
-        investmentBank: { name: "🏦 Investment Bank", baseCost: 10000, baseProduction: 0, emoji: "💰", special: "Unlocks loans!" }
+        factory: { name: "🏭 Food Factory", baseCost: 1000, baseProduction: 100, emoji: "⚙️" }
     };
 
-    const stocks = [
-        { name: "🍕 Caleb Foods", price: 100, owned: 0 },
-        { name: "🏎️ Ferrari Inc", price: 500, owned: 0 },
-        { name: "🤖 CLVS Corp", price: 250, owned: 0 }
+    const newsHeadlines = [
+        "🔴 CLVS unveils AI food processors!",
+        "🔴 RAH reactor temperatures rising!",
+        "🔴 ANT becomes a meme stock!",
+        "🔴 Caleb consumes 14,000 pizzas!",
+        "🔴 Ferrari stock hits all-time high!",
+        "🔴 New buffet opens in downtown!"
     ];
+
+    // Photo URLs (free placeholder images)
+    const photos = {
+        buildings: {
+            pizzaOven: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=200&fit=crop",
+            buffetLine: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400&h=200&fit=crop",
+            restaurant: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=200&fit=crop",
+            factory: "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=400&h=200&fit=crop",
+            default: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=200&fit=crop"
+        },
+        ferrari: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400&h=200&fit=crop",
+        finance: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=200&fit=crop",
+        stats: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop"
+    };
 
     function calculateTotalProduction() {
         let production = 0;
         for (const [id, data] of Object.entries(gameState.buildings)) {
-            if (data.unlocked) {
-                production += data.level * data.baseProduction;
-            }
+            production += data.level * data.baseProduction;
         }
-        production += gameState.plants * 5;
         const ferrariBonus = 1 + (gameState.ferraris * 0.02);
-        const prestigeBonus = 1 + (gameState.prestigeTokens * 0.5);
-        return Math.floor(production * ferrariBonus * prestigeBonus);
+        return Math.floor(production * ferrariBonus);
     }
 
     function updateUI() {
         document.getElementById("usernameDisplay").innerText = gameState.username;
         document.getElementById("foodAmount").innerText = Math.floor(gameState.food);
         document.getElementById("ferrariAmount").innerText = gameState.ferraris;
-        document.getElementById("prestigeLevel").innerText = gameState.prestigeTokens;
+        document.getElementById("repAmount").innerText = Math.floor(gameState.rep);
         document.getElementById("foodPerSec").innerText = calculateTotalProduction();
+        document.getElementById("moneyDisplay").innerText = "$" + Math.floor(gameState.money);
         document.getElementById("totalEaten").innerText = Math.floor(gameState.totalFoodEaten);
-        document.getElementById("statsFerraris").innerText = gameState.ferraris;
-        document.getElementById("totalMoney").innerText = Math.floor(gameState.totalMoneyEarned);
-        document.getElementById("prestigeTokens").innerText = gameState.prestigeTokens;
-        document.getElementById("prestigeBonus").innerText = (1 + gameState.prestigeTokens * 0.5).toFixed(1);
+        document.getElementById("ferrariBonus").innerText = (gameState.ferraris * 2) + "%";
         
-        if (gameState.buildings.investmentBank.unlocked) {
-            document.getElementById("currentLoan").innerText = Math.floor(gameState.currentLoan);
-            document.getElementById("currentDebt").innerText = Math.floor(gameState.currentDebt);
-        }
-        if (gameState.buildings.garden.unlocked) {
-            document.getElementById("plants").innerText = gameState.plants;
-        }
-        
-        let portfolioTotal = 0;
-        stocks.forEach((stock, i) => {
-            portfolioTotal += stock.owned * stock.price;
-        });
-        document.getElementById("portfolioValue").innerText = Math.floor(portfolioTotal);
+        let totalBuildings = 0;
+        for (const b of Object.values(gameState.buildings)) totalBuildings += b.level;
+        document.getElementById("totalBuildings").innerText = totalBuildings;
+        document.getElementById("totalMultiplier").innerText = (1 + gameState.ferraris * 0.02).toFixed(2) + "x";
         
         renderBuildings();
-        updateSpecialFeatures();
     }
 
     function renderBuildings() {
@@ -661,18 +631,18 @@
         grid.innerHTML = "";
         for (const [id, def] of Object.entries(buildingDefs)) {
             const building = gameState.buildings[id];
-            const cost = building.unlocked ? Math.floor(building.baseCost * Math.pow(1.5, building.level)) : building.baseCost;
+            const cost = Math.floor(building.baseCost * Math.pow(1.5, building.level));
             const production = building.baseProduction * building.level;
             const item = document.createElement("div");
-            item.className = `building-item ${!building.unlocked ? 'locked' : ''}`;
+            item.className = "building-item";
             item.innerHTML = `
                 <div class="building-info">
                     <h4>${def.name} ${def.emoji}</h4>
-                    <p>${building.unlocked ? `+${production} food/sec | Lvl ${building.level}` : `🔒 ${def.special}`}</p>
+                    <p>+${production} food/sec | Lvl ${building.level}</p>
                 </div>
                 <div class="building-cost">
                     <div class="cost">$${cost}</div>
-                    <div class="level">${building.unlocked ? '⬆️ Upgrade' : '🔓 Unlock'}</div>
+                    <div class="level">⬆️ Upgrade</div>
                 </div>
             `;
             item.addEventListener("click", () => buyBuilding(id));
@@ -682,218 +652,219 @@
 
     function buyBuilding(id) {
         const building = gameState.buildings[id];
-        const cost = building.unlocked ? Math.floor(building.baseCost * Math.pow(1.5, building.level)) : building.baseCost;
-        
+        const cost = Math.floor(building.baseCost * Math.pow(1.5, building.level));
         if (gameState.money >= cost) {
             gameState.money -= cost;
-            if (!building.unlocked) {
-                building.unlocked = true;
-                building.level = 1;
-                showFloatingText(`🔓 Unlocked ${buildingDefs[id].name}!`, "#2ecc71");
-            } else {
-                building.level++;
-                showFloatingText(`⬆️ ${buildingDefs[id].name} Level ${building.level}!`, "#feca57");
-            }
+            building.level++;
             updateUI();
             saveGame();
+            showFloatingText(`+1 ${buildingDefs[id].name} Level!`, "#feca57");
+            
+            // Update photo based on highest building
+            updateBuildingPhoto(id);
         } else {
             showFloatingText(`Need $${cost} more!`, "#ff6b6b");
         }
     }
 
-    function updateSpecialFeatures() {
-        const bankUnlocked = gameState.buildings.investmentBank.unlocked;
-        const gardenUnlocked = gameState.buildings.garden.unlocked;
-        const stocksUnlocked = gameState.buildings.stockExchange.unlocked;
-        const casinoUnlocked = gameState.buildings.casino.unlocked;
-        
-        document.getElementById("bankStatus").innerHTML = bankUnlocked ? "✅ Bank Open!" : "🔒 Requires Investment Bank (Level 1)";
-        document.getElementById("bankContent").style.display = bankUnlocked ? "block" : "none";
-        
-        document.getElementById("gardenStatus").innerHTML = gardenUnlocked ? "🌱 Garden Growing!" : "🔒 Requires Garden (Level 1)";
-        document.getElementById("gardenContent").style.display = gardenUnlocked ? "block" : "none";
-        
-        document.getElementById("stocksStatus").innerHTML = stocksUnlocked ? "📈 Market Active!" : "🔒 Requires Stock Exchange (Level 1)";
-        document.getElementById("stocksContent").style.display = stocksUnlocked ? "block" : "none";
-        
-        document.getElementById("casinoStatus").innerHTML = casinoUnlocked ? "🎲 Casino Open!" : "🔒 Requires Casino (Level 1)";
-        document.getElementById("casinoContent").style.display = casinoUnlocked ? "block" : "none";
-        
-        if (stocksUnlocked) renderStocks();
-    }
-
-    function renderStocks() {
-        const stocksDiv = document.getElementById("stocksList");
-        if (!stocksDiv) return;
-        stocksDiv.innerHTML = "";
-        stocks.forEach((stock, i) => {
-            const div = document.createElement("div");
-            div.className = "stock-item";
-            div.innerHTML = `
-                <div>
-                    <strong>${stock.name}</strong><br>
-                    $${Math.floor(stock.price)} | Own: ${stock.owned}
-                </div>
-                <button class="stock-buy-btn" data-stock="${i}">Buy 1</button>
-            `;
-            stocksDiv.appendChild(div);
-        });
-        document.querySelectorAll(".stock-buy-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const i = parseInt(btn.getAttribute("data-stock"));
-                if (gameState.money >= stocks[i].price) {
-                    gameState.money -= stocks[i].price;
-                    stocks[i].owned++;
-                    showFloatingText(`Bought ${stocks[i].name}!`, "#2ecc71");
-                    updateUI();
-                    saveGame();
-                } else {
-                    showFloatingText(`Need $${stocks[i].price}!`, "#ff6b6b");
-                }
-            });
-        });
-    }
-
-    function eatFood() {
-        let earned = 5 + Math.floor(Math.random() * 10);
-        gameState.food += earned;
-        gameState.totalFoodEaten += earned;
-        
-        const moneyEarned = Math.floor(gameState.food / 100);
-        if (moneyEarned > 0) {
-            gameState.money += moneyEarned;
-            gameState.totalMoneyEarned += moneyEarned;
-            gameState.food -= moneyEarned * 100;
-        }
-        
-        updateUI();
-        saveGame();
-        const eatBtn = document.getElementById("eatBtn");
-        eatBtn.style.transform = "scale(0.96)";
-        setTimeout(() => eatBtn.style.transform = "", 100);
-        showFloatingText(`+${earned} 🍕`, "#ff6b6b");
-    }
-
-    function takeLoan() {
-        gameState.currentLoan += 1000;
-        gameState.currentDebt += 1100;
-        gameState.money += 1000;
-        updateUI();
-        saveGame();
-        showFloatingText(`💰 Took $1000 loan!`, "#feca57");
-    }
-
-    function repayLoan() {
-        if (gameState.money >= 500 && gameState.currentDebt > 0) {
-            gameState.money -= 500;
-            gameState.currentDebt -= 500;
-            if (gameState.currentDebt < 0) gameState.currentDebt = 0;
-            updateUI();
-            saveGame();
-            showFloatingText(`💸 Repaid $500!`, "#2ecc71");
-        } else {
-            showFloatingText(`Need $500 or no debt!`, "#ff6b6b");
-        }
-    }
-
-    function plantSeed() {
-        if (gameState.money >= 200) {
-            gameState.money -= 200;
-            gameState.plants++;
-            updateUI();
-            saveGame();
-            showFloatingText(`🌱 Planted a seed!`, "#2ecc71");
-        } else {
-            showFloatingText(`Need $200!`, "#ff6b6b");
-        }
-    }
-
-    function harvestGarden() {
-        if (gameState.plants > 0 && gameState.money >= 1000) {
-            gameState.money -= 1000;
-            const harvestAmount = gameState.plants * 500;
-            gameState.money += harvestAmount;
-            gameState.totalMoneyEarned += harvestAmount;
-            showFloatingText(`🍎 Harvested $${harvestAmount}!`, "#feca57");
-            updateUI();
-            saveGame();
-        } else {
-            showFloatingText(`Need $1000 or no plants!`, "#ff6b6b");
-        }
-    }
-
-    function flipCoin() {
-        const bet = parseInt(document.getElementById("betAmount").value) || 100;
-        if (bet <= 0 || bet > gameState.money) {
-            showFloatingText(`Invalid bet!`, "#ff6b6b");
-            return;
-        }
-        const win = Math.random() < 0.5;
-        if (win) {
-            gameState.money += bet;
-            gameState.totalMoneyEarned += bet;
-            document.getElementById("flipResult").innerHTML = "🎉 WIN! +$" + bet;
-            showFloatingText(`🎉 Won $${bet}!`, "#2ecc71");
-        } else {
-            gameState.money -= bet;
-            document.getElementById("flipResult").innerHTML = "💀 LOSE! -$" + bet;
-            showFloatingText(`💀 Lost $${bet}!`, "#ff6b6b");
-        }
-        updateUI();
-        saveGame();
-    }
-
-    function spinSlots() {
-        if (gameState.money < 50) {
-            showFloatingText(`Need $50!`, "#ff6b6b");
-            return;
-        }
-        gameState.money -= 50;
-        const slots = ["🍒", "🍋", "🍊", "🍉", "⭐", "💰"];
-        const result = [slots[Math.floor(Math.random()*slots.length)], slots[Math.floor(Math.random()*slots.length)], slots[Math.floor(Math.random()*slots.length)]];
-        const win = result[0] === result[1] && result[1] === result[2];
-        if (win) {
-            const winAmount = result[0] === "💰" ? 5000 : (result[0] === "⭐" ? 1000 : 200);
-            gameState.money += winAmount;
-            gameState.totalMoneyEarned += winAmount;
-            document.getElementById("slotsResult").innerHTML = `${result.join(" ")} JACKPOT! +$${winAmount}`;
-            showFloatingText(`💰 JACKPOT $${winAmount}!`, "#feca57");
-        } else {
-            document.getElementById("slotsResult").innerHTML = `${result.join(" ")} Try again!`;
-            showFloatingText(`🎰 No match...`, "#a0a0b0");
-        }
-        updateUI();
-        saveGame();
-    }
-
-    function prestige() {
-        if (confirm("✨ PRESTIGE will reset ALL progress but give a permanent 2x multiplier per token! Continue?")) {
-            gameState.prestigeTokens++;
-            gameState.food = 0;
-            gameState.money = 0;
-            gameState.ferraris = 0;
-            gameState.currentLoan = 0;
-            gameState.currentDebt = 0;
-            gameState.plants = 0;
-            gameState.portfolio = {};
-            gameState.totalFoodEaten = 0;
-            stocks.forEach(s => s.owned = 0);
-            for (let id in gameState.buildings) {
-                gameState.buildings[id] = {
-                    level: 0,
-                    baseCost: buildingDefs[id].baseCost,
-                    baseProduction: buildingDefs[id].baseProduction || 0,
-                    unlocked: id === "pizzaOven" || id === "buffetLine" || id === "restaurant" || id === "factory",
-                    special: buildingDefs[id].special
-                };
-            }
-            updateUI();
-            saveGame();
-            showFloatingText(`✨ Prestige ${gameState.prestigeTokens}! 2x Multiplier! ✨`, "#feca57");
+    function updateBuildingPhoto(buildingId) {
+        const photoDiv = document.getElementById("buildingsPhoto");
+        const img = document.getElementById("buildingsImg");
+        const textDiv = document.getElementById("buildingsPhotoText");
+        if (photos.buildings[buildingId]) {
+            img.src = photos.buildings[buildingId];
+            img.style.display = "block";
+            textDiv.style.display = "none";
         }
     }
 
     function showFloatingText(message, color) {
         const floatDiv = document.createElement('div');
         floatDiv.innerText = message;
-       
+        floatDiv.style.position = 'fixed';
+        floatDiv.style.bottom = '30%';
+        floatDiv.style.left = '50%';
+        floatDiv.style.transform = 'translateX(-50%)';
+        floatDiv.style.background = color;
+        floatDiv.style.color = '#1a1a2e';
+        floatDiv.style.padding = '8px 20px';
+        floatDiv.style.borderRadius = '40px';
+        floatDiv.style.fontWeight = 'bold';
+        floatDiv.style.zIndex = '9999';
+        floatDiv.style.animation = 'fadeUp 0.8s ease forwards';
+        document.body.appendChild(floatDiv);
+        setTimeout(() => floatDiv.remove(), 800);
+    }
+
+    // Add fadeUp animation
+    const animStyle = document.createElement('style');
+    animStyle.textContent = `
+        @keyframes fadeUp {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-50px); }
+        }
+    `;
+    document.head.appendChild(animStyle);
+
+    function eatFood() {
+        let earned = 1 + Math.floor(Math.random() * 3);
+        gameState.food += earned;
+        gameState.totalFoodEaten += earned;
+        
+        // Convert food to money (100 food = $1)
+        const moneyEarned = Math.floor(gameState.food / 100);
+        if (moneyEarned > 0) {
+            gameState.money += moneyEarned;
+            gameState.food -= moneyEarned * 100;
+        }
+        
+        // Gain rep every 1000 food eaten
+        gameState.rep += Math.floor(earned / 10);
+        
+        updateUI();
+        saveGame();
+        
+        // Visual feedback
+        const eatBtn = document.getElementById("eatBtn");
+        eatBtn.style.transform = "scale(0.96)";
+        setTimeout(() => eatBtn.style.transform = "", 100);
+        showFloatingText(`+${earned} 🍕`, "#ff6b6b");
+    }
+
+    function buyFerraris() {
+        if (gameState.money >= 5) {
+            gameState.money -= 5;
+            gameState.ferraris += 500;
+            updateUI();
+            saveGame();
+            showFloatingText(`+500 Ferraris! 🏎️`, "#feca57");
+            
+            // Show Ferrari photo
+            const ferrariImg = document.getElementById("ferrariImg");
+            if (ferrariImg && photos.ferrari) {
+                ferrariImg.src = photos.ferrari;
+                ferrariImg.style.display = "block";
+                document.getElementById("ferrariPhotoText").style.display = "none";
+            }
+        } else {
+            showFloatingText(`Need $5! Current: $${Math.floor(gameState.money)}`, "#ff6b6b");
+        }
+    }
+
+    function updateTicker() {
+        const ticker = document.getElementById("ticker");
+        if (ticker) {
+            const shuffled = [...newsHeadlines].sort(() => 0.5 - Math.random());
+            ticker.innerHTML = shuffled.map(h => `<span>${h}</span>`).join(' &nbsp;&nbsp;&nbsp; ');
+        }
+    }
+
+    // Auto-production
+    let productionInterval = null;
+    function startProduction() {
+        if (productionInterval) clearInterval(productionInterval);
+        productionInterval = setInterval(() => {
+            const production = calculateTotalProduction();
+            gameState.food += production;
+            const moneyEarned = Math.floor(gameState.food / 100);
+            if (moneyEarned > 0) {
+                gameState.money += moneyEarned;
+                gameState.food -= moneyEarned * 100;
+            }
+            updateUI();
+            saveGame();
+        }, 1000);
+    }
+
+    // Save/Load
+    function saveGame() {
+        gameState.lastSave = Date.now();
+        localStorage.setItem("calebEatingSim", JSON.stringify(gameState));
+    }
+
+    function loadGame() {
+        const saved = localStorage.getItem("calebEatingSim");
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                gameState = { ...gameState, ...parsed };
+            } catch(e) { console.warn(e); }
+        }
+        
+        if (!gameState.money) gameState.money = 0;
+        if (!gameState.totalFoodEaten) gameState.totalFoodEaten = 0;
+        if (!gameState.rep) gameState.rep = 0;
+        
+        if (!gameState.username || gameState.username === "Player") {
+            let newName = prompt("Enter your username:", "Foodie");
+            if (newName && newName.trim()) gameState.username = newName.trim();
+            else gameState.username = "Foodie";
+            saveGame();
+        }
+        
+        updateUI();
+    }
+
+    // Loading Animation
+    async function startLoading() {
+        const loadingScreen = document.getElementById("loadingScreen");
+        const loadingFill = document.getElementById("loadingFill");
+        const loadingText = document.getElementById("loadingText");
+        
+        const phases = [
+            { text: "Loading Buildings...", progress: 25 },
+            { text: "Loading Ferraris...", progress: 50 },
+            { text: "Preparing Buffet...", progress: 75 },
+            { text: "Welcome to Clevis Studios!", progress: 100 }
+        ];
+        
+        for (const phase of phases) {
+            loadingText.innerText = phase.text;
+            loadingFill.style.width = phase.progress + '%';
+            await new Promise(r => setTimeout(r, 500));
+        }
+        
+        loadingScreen.style.opacity = '0';
+        await new Promise(r => setTimeout(r, 500));
+        loadingScreen.style.display = 'none';
+        document.getElementById("gameContainer").style.display = 'block';
+    }
+
+    // Initialize
+    async function init() {
+        loadGame();
+        startProduction();
+        updateTicker();
+        setInterval(updateTicker, 15000);
+        
+        document.getElementById("clevisBtn").addEventListener("click", () => {
+            window.open("https://chasemcdillan.github.io", "_blank");
+        });
+        document.getElementById("eatBtn").addEventListener("click", eatFood);
+        document.getElementById("buyFerrariBtn").addEventListener("click", buyFerraris);
+        
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(`tab-${tabId}`).classList.add('active');
+            });
+        });
+        
+        // Set default photos
+        document.getElementById("ferrariImg").src = photos.ferrari;
+        document.getElementById("financeImg").src = photos.finance;
+        document.getElementById("statsImg").src = photos.stats;
+        
+        await startLoading();
+        updateUI();
+        showFloatingText(`Welcome, ${gameState.username}! 🍕`, "#feca57");
+    }
+    
+    init();
+</script>
+</body>
+</html>
