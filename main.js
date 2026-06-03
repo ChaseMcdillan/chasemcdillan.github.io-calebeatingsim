@@ -1,254 +1,224 @@
-let foodMultiplier = 1;
-const achievements = [
-{
-    id: "eat100",
-    unlocked: false,
-    reward: 1,
-    condition: () => game.totalEaten >= 100
-},
-{
-    id: "eat1000",
-    unlocked: false,
-    reward: 5,
-    condition: () => game.totalEaten >= 1000
-},
-{
-    id: "eat10000",
-    unlocked: false,
-    reward: 25,
-    condition: () => game.totalEaten >= 10000
-}
-];
 const buildings = [
+
 {
-    id: "lemonade",
-    name: "Lemonade Stand",
-    baseCost: 0,
-    income: 1,
-    owned: 1
+    id:"lemonade",
+    name:"Lemonade Stand",
+    cost:0,
+    income:1,
+    owned:1
 },
+
 {
-    id: "hotdog",
-    name: "Hot Dog Cart",
-    baseCost: 100,
-    income: 5,
-    owned: 0
+    id:"hotdog",
+    name:"Hot Dog Cart",
+    cost:100,
+    income:5,
+    owned:0
 },
+
 {
-    id: "burger",
-    name: "Burger Shack",
-    baseCost: 500,
-    income: 15,
-    owned: 0
+    id:"burger",
+    name:"Burger Shack",
+    cost:500,
+    income:15,
+    owned:0
 },
+
 {
-    id: "pizza",
-    name: "Pizzeria",
-    baseCost: 2000,
-    income: 20,
-    owned: 0
+    id:"pizza",
+    name:"Pizzeria",
+    cost:2000,
+    income:20,
+    owned:0
 },
+
 {
-    id: "grocery",
-    name: "Grocery Store",
-    baseCost: 10000,
-    income: 75,
-    owned: 0
+    id:"grocery",
+    name:"Grocery Store",
+    cost:10000,
+    income:75,
+    owned:0
 },
+
 {
-    id: "fleet",
-    name: "Food Truck Fleet",
-    baseCost: 250000,
-    income: 600,
-    owned: 0
+    id:"fleet",
+    name:"Food Truck Fleet",
+    cost:250000,
+    income:600,
+    owned:0
 }
+
 ];
+
+let foodMultiplier = 1;
 
 let game = {
-    food: 0,
-    ferraris: 0,
-    reputation: 0,
-    debt: 0,
-    totalEaten: 0,
-    totalGenerated: 0
+
+    food:0,
+
+    ferraris:0,
+
+    reputation:0,
+
+    totalEaten:0,
+
+    totalGenerated:0
 };
 
-function buildingCost(building) {
+const achievements = [
+
+{
+    name:"Hungry Caleb",
+    goal:100,
+    reward:1,
+    unlocked:false
+},
+
+{
+    name:"Mega Caleb",
+    goal:1000,
+    reward:5,
+    unlocked:false
+},
+
+{
+    name:"Food Monster",
+    goal:10000,
+    reward:25,
+    unlocked:false
+}
+
+];
+
+function getCost(building){
+
     return Math.floor(
-        building.baseCost *
-        Math.pow(1.15, building.owned)
+        building.cost *
+        Math.pow(1.15,building.owned)
     );
 }
 
-function foodPerSecond() {
+function foodPerSecond(){
 
     let total = 0;
 
-    const pizzaCount =
+    let pizzaCount =
         buildings.find(
-            b => b.id === "pizza"
+            b=>b.id==="pizza"
         ).owned;
 
-    const bonus = 1 + pizzaCount * 0.1;
+    let bonus =
+        1 + pizzaCount*0.1;
 
-    buildings.forEach(building => {
+    buildings.forEach(building=>{
+
         total +=
             building.income *
             building.owned *
             bonus;
     });
 
-    return total = foodMultiplier;
+    return total *
+           foodMultiplier;
 }
 
-function updateUI() {
+function updateUI(){
 
-    document.getElementById("food").textContent =
+    document.getElementById(
+        "food"
+    ).textContent =
         Math.floor(game.food);
 
-    document.getElementById("fps").textContent =
+    document.getElementById(
+        "fps"
+    ).textContent =
         foodPerSecond().toFixed(1);
 
-    document.getElementById("eaten").textContent =
+    document.getElementById(
+        "eaten"
+    ).textContent =
         game.totalEaten;
-    document.getElementById("ferraris").textContent =
-    game.ferraris;
 
-    const container =
-        document.getElementById("buildings");
+    document.getElementById(
+        "ferraris"
+    ).textContent =
+        game.ferraris;
 
-    container.innerHTML = "";
+    document.getElementById(
+        "reputation"
+    ).textContent =
+        game.reputation.toFixed(0);
 
-    buildings.forEach(building => {
+    let container =
+        document.getElementById(
+            "buildings"
+        );
 
-        const div =
-            document.createElement("div");
+    container.innerHTML="";
 
-        div.className = "building";
+    buildings.forEach(building=>{
 
-        div.innerHTML = `
-            <h3>${building.name}</h3>
-            <p>Owned: ${building.owned}</p>
-            <p>Produces ${building.income}/sec</p>
-            <p>Cost: ${buildingCost(building)}</p>
-            <button onclick="buyBuilding('${building.id}')">
-                Buy
-            </button>
+        let div =
+            document.createElement(
+                "div"
+            );
+
+        div.className =
+            "building";
+
+        div.innerHTML=`
+
+        <h3>${building.name}</h3>
+
+        <p>
+        Owned:
+        ${building.owned}
+        </p>
+
+        <p>
+        Produces:
+        ${building.income}/sec
+        </p>
+
+        <p>
+        Cost:
+        ${getCost(building)}
+        </p>
+
+        <button
+        onclick="buyBuilding('${building.id}')">
+        Buy
+        </button>
         `;
 
         container.appendChild(div);
     });
 }
 
-function buyBuilding(id) {
+function buyBuilding(id){
 
-    const building =
+    let building =
         buildings.find(
-            b => b.id === id
+            b=>b.id===id
         );
 
-    const cost =
-        buildingCost(building);
+    let cost =
+        getCost(building);
 
-    if(game.food >= cost) {
+    if(game.food < cost)
+        return;
 
-        game.food -= cost;
-        building.owned++;
+    game.food -= cost;
 
-        updateUI();
-    }
-}
-
-window.buyBuilding = buyBuilding;
-window.buyDoubleFood =
-    buyDoubleFood;
-
-document
-.getElementById("eatBtn")
-.addEventListener("click", () => {
-
-    if(game.food >= 1) {
-
-        game.food--;
-        game.totalEaten++;
-        game.reputation += 0.01;
-
-        checkAchievements();
-updateUI();;
-    }
-});
-
-setInterval(() => {
-
-    game.food += foodPerSecond();
+    building.owned++;
 
     updateUI();
-
-}, 1000);
-
-updateUI();
-function saveGame() {
-
-    localStorage.setItem(
-        "calebSave",
-        JSON.stringify({
-            game,
-            buildings
-        })
-    );
-}
-function checkAchievements() {
-
-    achievements.forEach(a => {
-
-        if(a.unlocked) return;
-
-        if(a.condition()) {
-
-            a.unlocked = true;
-
-            game.ferraris += a.reward;
-
-            alert(
-                "Achievement Unlocked!\n+" +
-                a.reward +
-                " Ferraris"
-            );
-        }
-    });
-}
-function loadGame() {
-
-    const save =
-        localStorage.getItem("calebSave");
-
-    if(!save) return;
-
-    const data =
-        JSON.parse(save);
-
-    game = data.game;
-
-    data.buildings.forEach(saved => {
-
-        const building =
-            buildings.find(
-                b => b.id === saved.id
-            );
-
-        if(building)
-            building.owned =
-                saved.owned;
-    });
 }
 
-loadGame();
+function buyDoubleFood(){
 
-setInterval(saveGame, 5000);
-
-function buyDoubleFood() {
-
-    if(game.ferraris < 25) return;
+    if(game.ferraris < 25)
+        return;
 
     game.ferraris -= 25;
 
@@ -256,3 +226,145 @@ function buyDoubleFood() {
 
     updateUI();
 }
+
+function checkAchievements(){
+
+    achievements.forEach(a=>{
+
+        if(a.unlocked)
+            return;
+
+        if(game.totalEaten >= a.goal){
+
+            a.unlocked = true;
+
+            game.ferraris +=
+                a.reward;
+
+            alert(
+                a.name +
+                "\n+" +
+                a.reward +
+                " Ferraris"
+            );
+        }
+    });
+}
+
+document
+.getElementById("eatBtn")
+.addEventListener("click",()=>{
+
+    if(game.food >= 1){
+
+        game.food--;
+
+        game.totalEaten++;
+
+        game.reputation += 1;
+
+        checkAchievements();
+
+        updateUI();
+    }
+});
+
+function saveGame(){
+
+    localStorage.setItem(
+        "calebSaveV2",
+        JSON.stringify({
+
+            game,
+
+            buildings,
+
+            achievements,
+
+            foodMultiplier,
+
+            saveTime:Date.now()
+        })
+    );
+}
+
+function loadGame(){
+
+    let save =
+        localStorage.getItem(
+            "calebSaveV2"
+        );
+
+    if(!save)
+        return;
+
+    let data =
+        JSON.parse(save);
+
+    game =
+        data.game;
+
+    foodMultiplier =
+        data.foodMultiplier || 1;
+
+    data.buildings.forEach(saved=>{
+
+        let building =
+            buildings.find(
+                b=>b.id===saved.id
+            );
+
+        if(building)
+            building.owned =
+                saved.owned;
+    });
+
+    if(data.achievements){
+
+        data.achievements.forEach(
+            (saved,index)=>{
+
+            achievements[index]
+                .unlocked =
+                    saved.unlocked;
+        });
+    }
+
+    let offlineSeconds =
+        (
+        Date.now() -
+        data.saveTime
+        ) / 1000;
+
+    game.food +=
+        foodPerSecond() *
+        offlineSeconds;
+}
+
+setInterval(()=>{
+
+    let gain =
+        foodPerSecond();
+
+    game.food += gain;
+
+    game.totalGenerated += gain;
+
+    updateUI();
+
+},1000);
+
+setInterval(
+    saveGame,
+    5000
+);
+
+window.buyBuilding =
+    buyBuilding;
+
+window.buyDoubleFood =
+    buyDoubleFood;
+
+loadGame();
+
+updateUI();
