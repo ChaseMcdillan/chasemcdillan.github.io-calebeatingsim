@@ -1,3 +1,4 @@
+let foodMultiplier = 1;
 const achievements = [
 {
     id: "eat100",
@@ -97,7 +98,7 @@ function foodPerSecond() {
             bonus;
     });
 
-    return total;
+    return total = foodMultiplier;
 }
 
 function updateUI() {
@@ -159,6 +160,8 @@ function buyBuilding(id) {
 }
 
 window.buyBuilding = buyBuilding;
+window.buyDoubleFood =
+    buyDoubleFood;
 
 document
 .getElementById("eatBtn")
@@ -242,3 +245,14 @@ function loadGame() {
 loadGame();
 
 setInterval(saveGame, 5000);
+
+function buyDoubleFood() {
+
+    if(game.ferraris < 25) return;
+
+    game.ferraris -= 25;
+
+    foodMultiplier *= 2;
+
+    updateUI();
+}
