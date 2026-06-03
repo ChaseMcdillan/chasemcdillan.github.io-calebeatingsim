@@ -31,8 +31,7 @@ const buildings = [
 
 let game = {
     food: 0,
-    totalEaten: 0,
-    lastSave: Date.now()
+    totalEaten: 0
 };
 
 function buildingCost(building) {
@@ -46,15 +45,18 @@ function foodPerSecond() {
 
     let total = 0;
 
-    let pizzaBonus = 1;
+    const pizzaCount =
+        buildings.find(
+            b => b.id === "pizza"
+        ).owned;
 
-    const pizzerias =
-        buildings.find(b => b.id === "pizza").owned;
+    const bonus = 1 + pizzaCount * 0.1;
 
-    pizzaBonus += pizzerias * 0.1;
-
-    buildings.forEach(b => {
-        total += b.income * b.owned * pizzaBonus;
+    buildings.forEach(building => {
+        total +=
+            building.income *
+            building.owned *
+            bonus;
     });
 
     return total;
@@ -69,7 +71,7 @@ function updateUI() {
         foodPerSecond().toFixed(1);
 
     document.getElementById("eaten").textContent =
-        Math.floor(game.totalEaten);
+        game.totalEaten;
 
     const container =
         document.getElementById("buildings");
@@ -78,16 +80,16 @@ function updateUI() {
 
     buildings.forEach(building => {
 
-        const div = document.createElement("div");
-        div.className = "building";
+        const div =
+            document.createElement("div");
 
-        const cost = buildingCost(building);
+        div.className = "building";
 
         div.innerHTML = `
             <h3>${building.name}</h3>
             <p>Owned: ${building.owned}</p>
-            <p>Income: ${building.income}/sec</p>
-            <p>Cost: ${cost}</p>
+            <p>Produces ${building.income}/sec</p>
+            <p>Cost: ${buildingCost(building)}</p>
             <button onclick="buyBuilding('${building.id}')">
                 Buy
             </button>
@@ -100,11 +102,14 @@ function updateUI() {
 function buyBuilding(id) {
 
     const building =
-        buildings.find(b => b.id === id);
+        buildings.find(
+            b => b.id === id
+        );
 
-    const cost = buildingCost(building);
+    const cost =
+        buildingCost(building);
 
-    if (game.food >= cost) {
+    if(game.food >= cost) {
 
         game.food -= cost;
         building.owned++;
@@ -113,59 +118,19 @@ function buyBuilding(id) {
     }
 }
 
-function saveGame() {
-
-    localStorage.setItem(
-        "calebEatingSave",
-        JSON.stringify({
-            game,
-            buildings,
-            timestamp: Date.now()
-        })
-    );
-}
-
-function loadGame() {
-
-    const save =
-        localStorage.getItem("calebEatingSave");
-
-    if (!save) return;
-
-    const data = JSON.parse(save);
-
-    game = data.game;
-
-    data.buildings.forEach(saved => {
-
-        const building =
-            buildings.find(
-                b => b.id === saved.id
-            );
-
-        if (building)
-            building.owned = saved.owned;
-    });
-
-    const offlineSeconds =
-        (Date.now() - data.timestamp) / 1000;
-
-    const earnings =
-        foodPerSecond() * offlineSeconds;
-
-    game.food += earnings;
-}
+window.buyBuilding = buyBuilding;
 
 document
 .getElementById("eatBtn")
 .addEventListener("click", () => {
 
-    if (game.food >= 1) {
+    if(game.food >= 1) {
+
         game.food--;
         game.totalEaten++;
-    }
 
-    updateUI();
+        updateUI();
+    }
 });
 
 setInterval(() => {
@@ -176,9 +141,4 @@ setInterval(() => {
 
 }, 1000);
 
-setInterval(saveGame, 5000);
-
-loadGame();
 updateUI();
-
-window.buyBuilding = buyBuilding;
