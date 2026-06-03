@@ -41,17 +41,14 @@
         }
 
         .clevis-logo-large .logo-icon {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
+            width: 120px;
+            height: 120px;
+            border-radius: 25px;
+            object-fit: cover;
             margin: 0 auto 1rem;
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
             animation: pulse 1.5s infinite;
+            display: block;
         }
 
         @keyframes pulse {
@@ -125,12 +122,8 @@
         .clevis-logo-small {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #ff6b6b, #feca57);
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
+            object-fit: cover;
         }
 
         .clevis-btn span {
@@ -435,7 +428,7 @@
 
 <div id="loadingScreen">
     <div class="clevis-logo-large">
-        <div class="logo-icon">🍽️</div>
+        <img src="assets/clevis-logo.png" class="logo-icon" alt="Clevis Studios Logo">
         <h1>Clevis Studios</h1>
     </div>
     <div class="loading-bar-container">
@@ -447,7 +440,7 @@
 <div id="gameContainer">
     <div class="header">
         <div class="clevis-btn" id="clevisBtn">
-            <div class="clevis-logo-small">🎮</div>
+            <img src="assets/clevis-logo.png" class="clevis-logo-small" alt="Clevis Studios">
             <span>Clevis Studio</span>
         </div>
     </div>
@@ -580,6 +573,7 @@
     let gameState = {
         username: "Player",
         food: 0,
+        money: 0,
         ferraris: 0,
         prestigeTokens: 0,
         totalFoodEaten: 0,
@@ -902,143 +896,4 @@
     function showFloatingText(message, color) {
         const floatDiv = document.createElement('div');
         floatDiv.innerText = message;
-        floatDiv.style.position = 'fixed';
-        floatDiv.style.bottom = '30%';
-        floatDiv.style.left = '50%';
-        floatDiv.style.transform = 'translateX(-50%)';
-        floatDiv.style.background = color;
-        floatDiv.style.color = '#1a1a2e';
-        floatDiv.style.padding = '8px 20px';
-        floatDiv.style.borderRadius = '40px';
-        floatDiv.style.fontWeight = 'bold';
-        floatDiv.style.zIndex = '9999';
-        floatDiv.style.animation = 'fadeUp 0.8s ease forwards';
-        document.body.appendChild(floatDiv);
-        setTimeout(() => floatDiv.remove(), 800);
-    }
-
-    const animStyle = document.createElement('style');
-    animStyle.textContent = `@keyframes fadeUp { 0% { opacity: 1; transform: translateX(-50%) translateY(0); } 100% { opacity: 0; transform: translateX(-50%) translateY(-50px); } }`;
-    document.head.appendChild(animStyle);
-
-    function updateTicker() {
-        const headlines = ["🔴 CLVS unveils AI food processors!", "🔴 RAH reactor temperatures rising!", "🔴 ANT becomes a meme stock!", "🔴 Ferrari stock hits all-time high!", "🔴 Caleb consumes 14,000 pizzas!", "🔴 New buffet opens in downtown!", "🔴 Stock market soaring!", "🔴 Casino jackpot winner!"];
-        const ticker = document.getElementById("ticker");
-        if (ticker) {
-            const shuffled = [...headlines].sort(() => 0.5 - Math.random());
-            ticker.innerHTML = shuffled.map(h => `<span>${h}</span>`).join(' &nbsp;&nbsp;&nbsp; ');
-        }
-    }
-
-    let productionInterval = null;
-    function startProduction() {
-        if (productionInterval) clearInterval(productionInterval);
-        productionInterval = setInterval(() => {
-            const production = calculateTotalProduction();
-            gameState.food += production;
-            const moneyEarned = Math.floor(gameState.food / 100);
-            if (moneyEarned > 0) {
-                gameState.money += moneyEarned;
-                gameState.totalMoneyEarned += moneyEarned;
-                gameState.food -= moneyEarned * 100;
-            }
-            if (gameState.currentDebt > 0) {
-                const interest = Math.floor(gameState.currentDebt * 0.1);
-                gameState.currentDebt += interest;
-                if (gameState.currentDebt > gameState.currentLoan * 3) {
-                    showFloatingText("⚠️ Debt interest is accumulating!", "#ff6b6b");
-                }
-            }
-            updateUI();
-            saveGame();
-        }, 1000);
-    }
-
-    function saveGame() {
-        gameState.lastSave = Date.now();
-        localStorage.setItem("calebEatingSim", JSON.stringify({ ...gameState, portfolio: stocks.map(s => s.owned) }));
-    }
-
-    function loadGame() {
-        const saved = localStorage.getItem("calebEatingSim");
-        if (saved) {
-            try {
-                const parsed = JSON.parse(saved);
-                Object.assign(gameState, parsed);
-                if (parsed.portfolio) {
-                    parsed.portfolio.forEach((owned, i) => { if (stocks[i]) stocks[i].owned = owned; });
-                }
-            } catch(e) { console.warn(e); }
-        }
-        if (!gameState.money) gameState.money = 0;
-        if (!gameState.totalFoodEaten) gameState.totalFoodEaten = 0;
-        if (!gameState.totalMoneyEarned) gameState.totalMoneyEarned = 0;
-        if (!gameState.prestigeTokens) gameState.prestigeTokens = 0;
-        if (!gameState.username || gameState.username === "Player") {
-            let newName = prompt("Enter your username:", "Foodie");
-            if (newName && newName.trim()) gameState.username = newName.trim();
-            else gameState.username = "Foodie";
-            saveGame();
-        }
-        updateUI();
-    }
-
-    async function startLoading() {
-        const loadingScreen = document.getElementById("loadingScreen");
-        const loadingFill = document.getElementById("loadingFill");
-        const loadingText = document.getElementById("loadingText");
-        const phases = [
-            { text: "Loading Buildings...", progress: 20 },
-            { text: "Loading Casino...", progress: 40 },
-            { text: "Loading Stock Market...", progress: 60 },
-            { text: "Loading Garden...", progress: 80 },
-            { text: "Welcome to Caleb Eating Sim!", progress: 100 }
-        ];
-        for (const phase of phases) {
-            loadingText.innerText = phase.text;
-            loadingFill.style.width = phase.progress + '%';
-            await new Promise(r => setTimeout(r, 400));
-        }
-        loadingScreen.style.opacity = '0';
-        await new Promise(r => setTimeout(r, 500));
-        loadingScreen.style.display = 'none';
-        document.getElementById("gameContainer").style.display = 'block';
-    }
-
-    async function init() {
-        loadGame();
-        startProduction();
-        updateTicker();
-        setInterval(updateTicker, 15000);
-        
-        document.getElementById("clevisBtn").addEventListener("click", () => {
-            window.open("https://chasemcdillan.github.io", "_blank");
-        });
-        document.getElementById("eatBtn").addEventListener("click", eatFood);
-        document.getElementById("takeLoanBtn")?.addEventListener("click", takeLoan);
-        document.getElementById("repayLoanBtn")?.addEventListener("click", repayLoan);
-        document.getElementById("plantBtn")?.addEventListener("click", plantSeed);
-        document.getElementById("harvestBtn")?.addEventListener("click", harvestGarden);
-        document.getElementById("flipCoinBtn")?.addEventListener("click", flipCoin);
-        document.getElementById("spinSlotsBtn")?.addEventListener("click", spinSlots);
-        document.getElementById("prestigeBtn")?.addEventListener("click", prestige);
-        
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const tabId = btn.getAttribute('data-tab');
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-                document.getElementById(`tab-${tabId}`).classList.add('active');
-            });
-        });
-        
-        await startLoading();
-        updateUI();
-        showFloatingText(`Welcome, ${gameState.username}! 🍕`, "#feca57");
-    }
-    
-    init();
-</script>
-</body>
-</html>
+       
