@@ -1,100 +1,129 @@
-const buildings = [
+// ===== CALEB EATING SIM V0.3 =====
 
+const SAVE_KEY = "calebEatingSimV03";
+
+let game = {
+    food: 0,
+    ferraris: 0,
+    reputation: 0,
+    totalEaten: 0,
+    totalGenerated: 0,
+    debt: 0,
+    prestiges: 0,
+    foodMultiplier: 1
+};
+
+const buildings = [
 {
     id:"lemonade",
     name:"Lemonade Stand",
+    image:"assets/lemonade.png",
     cost:0,
     income:1,
     owned:1
 },
-
 {
     id:"hotdog",
     name:"Hot Dog Cart",
+    image:"assets/hotdog.png",
     cost:100,
     income:5,
     owned:0
 },
-
 {
     id:"burger",
     name:"Burger Shack",
+    image:"assets/burger.png",
     cost:500,
     income:15,
     owned:0
 },
-
 {
-    id:"pizza",
+    id:"pizzeria",
     name:"Pizzeria",
+    image:"assets/pizzeria.png",
     cost:2000,
     income:20,
     owned:0
 },
-
 {
-    id:"grocery",
-    name:"Grocery Store",
-    cost:10000,
-    income:75,
+    id:"garden",
+    name:"Garden",
+    image:"assets/garden.png",
+    cost:5000,
+    income:35,
     owned:0
 },
-
+{
+    id:"walmart",
+    name:"Walmart",
+    image:"assets/walmart.png",
+    cost:50000,
+    income:120,
+    owned:0
+},
 {
     id:"fleet",
     name:"Food Truck Fleet",
+    image:"assets/fleet.png",
     cost:250000,
     income:600,
     owned:0
 }
-
 ];
 
-let foodMultiplier = 1;
+function showNotification(text){
 
-let game = {
+    const area =
+    document.getElementById(
+        "notificationArea"
+    );
 
-    food:0,
+    const div =
+    document.createElement("div");
 
-    ferraris:0,
+    div.className =
+    "notification";
 
-    reputation:0,
+    div.textContent =
+    text;
 
-    totalEaten:0,
+    area.appendChild(div);
 
-    totalGenerated:0
-};
-
-const achievements = [
-
-{
-    name:"Hungry Caleb",
-    goal:100,
-    reward:1,
-    unlocked:false
-},
-
-{
-    name:"Mega Caleb",
-    goal:1000,
-    reward:5,
-    unlocked:false
-},
-
-{
-    name:"Food Monster",
-    goal:10000,
-    reward:25,
-    unlocked:false
+    setTimeout(()=>{
+        div.remove();
+    },4000);
 }
 
-];
+function showTab(tabId){
+
+    document
+    .querySelectorAll(".tab-content")
+    .forEach(tab=>{
+
+        tab.classList.remove(
+            "active-tab"
+        );
+
+    });
+
+    document
+    .getElementById(tabId)
+    .classList.add(
+        "active-tab"
+    );
+}
+
+window.showTab = showTab;
 
 function getCost(building){
 
     return Math.floor(
         building.cost *
-        Math.pow(1.15,building.owned)
+        Math.pow(
+            1.15,
+            building.owned
+        )
     );
 }
 
@@ -102,72 +131,75 @@ function foodPerSecond(){
 
     let total = 0;
 
-    let pizzaCount =
-        buildings.find(
-            b=>b.id==="pizza"
-        ).owned;
-
-    let bonus =
-        1 + pizzaCount*0.1;
-
-    buildings.forEach(building=>{
+    buildings.forEach(b=>{
 
         total +=
-            building.income *
-            building.owned *
-            bonus;
+        b.income *
+        b.owned;
+
     });
 
     return total *
-           foodMultiplier;
+    game.foodMultiplier;
 }
 
-function updateUI(){
+function buyBuilding(id){
 
-    document.getElementById(
-        "food"
-    ).textContent =
-        Math.floor(game.food);
+    const building =
+    buildings.find(
+        b=>b.id===id
+    );
 
-    document.getElementById(
-        "fps"
-    ).textContent =
-        foodPerSecond().toFixed(1);
+    const cost =
+    getCost(building);
 
-    document.getElementById(
-        "eaten"
-    ).textContent =
-        game.totalEaten;
+    if(game.food < cost){
 
-    document.getElementById(
-        "ferraris"
-    ).textContent =
-        game.ferraris;
-
-    document.getElementById(
-        "reputation"
-    ).textContent =
-        game.reputation.toFixed(0);
-
-    let container =
-        document.getElementById(
-            "buildings"
+        showNotification(
+            "Not enough food!"
         );
 
-    container.innerHTML="";
+        return;
+    }
+
+    game.food -= cost;
+
+    building.owned++;
+
+    showNotification(
+        "Bought " +
+        building.name
+    );
+
+    renderBuildings();
+
+    updateUI();
+}
+
+window.buyBuilding =
+buyBuilding;
+
+function renderBuildings(){
+
+    const container =
+    document.getElementById(
+        "buildingContainer"
+    );
+
+    container.innerHTML = "";
 
     buildings.forEach(building=>{
 
-        let div =
-            document.createElement(
-                "div"
-            );
+        const card =
+        document.createElement(
+            "div"
+        );
 
-        div.className =
-            "building";
+        card.className =
+        "building-card";
 
-        div.innerHTML=`
-
+        card.innerHTML = `
+        <img src="${building.image}">
         <h3>${building.name}</h3>
 
         <p>
@@ -176,8 +208,8 @@ function updateUI(){
         </p>
 
         <p>
-        Produces:
-        ${building.income}/sec
+        +${building.income}
+        Food/sec
         </p>
 
         <p>
@@ -186,74 +218,75 @@ function updateUI(){
         </p>
 
         <button
+        class="buy-btn"
         onclick="buyBuilding('${building.id}')">
-        Buy
+        BUY
         </button>
         `;
 
-        container.appendChild(div);
-    });
-}
-
-function buyBuilding(id){
-
-    let building =
-        buildings.find(
-            b=>b.id===id
+        container.appendChild(
+            card
         );
-
-    let cost =
-        getCost(building);
-
-    if(game.food < cost)
-        return;
-
-    game.food -= cost;
-
-    building.owned++;
-
-    updateUI();
-}
-
-function buyDoubleFood(){
-
-    if(game.ferraris < 25)
-        return;
-
-    game.ferraris -= 25;
-
-    foodMultiplier *= 2;
-
-    updateUI();
-}
-
-function checkAchievements(){
-
-    achievements.forEach(a=>{
-
-        if(a.unlocked)
-            return;
-
-        if(game.totalEaten >= a.goal){
-
-            a.unlocked = true;
-
-            game.ferraris +=
-                a.reward;
-
-            alert(
-                a.name +
-                "\n+" +
-                a.reward +
-                " Ferraris"
-            );
-        }
     });
+}
+
+function updateUI(){
+
+    document.getElementById(
+        "food"
+    ).textContent =
+    Math.floor(game.food);
+
+    document.getElementById(
+        "fps"
+    ).textContent =
+    foodPerSecond()
+    .toFixed(1);
+
+    document.getElementById(
+        "ferraris"
+    ).textContent =
+    game.ferraris;
+
+    document.getElementById(
+        "reputation"
+    ).textContent =
+    Math.floor(
+        game.reputation
+    );
+
+    document.getElementById(
+        "totalEaten"
+    ).textContent =
+    Math.floor(
+        game.totalEaten
+    );
+
+    document.getElementById(
+        "totalGenerated"
+    ).textContent =
+    Math.floor(
+        game.totalGenerated
+    );
+
+    document.getElementById(
+        "debt"
+    ).textContent =
+    Math.floor(
+        game.debt
+    );
+
+    document.getElementById(
+        "prestiges"
+    ).textContent =
+    game.prestiges;
 }
 
 document
 .getElementById("eatBtn")
-.addEventListener("click",()=>{
+.addEventListener(
+"click",
+()=>{
 
     if(game.food >= 1){
 
@@ -261,90 +294,79 @@ document
 
         game.totalEaten++;
 
-        game.reputation += 1;
-
-        checkAchievements();
+        game.reputation++;
 
         updateUI();
     }
+
 });
 
 function saveGame(){
 
     localStorage.setItem(
-        "calebSaveV2",
+        SAVE_KEY,
         JSON.stringify({
 
             game,
-
             buildings,
+            saveTime:
+            Date.now()
 
-            achievements,
-
-            foodMultiplier,
-
-            saveTime:Date.now()
         })
     );
 }
 
 function loadGame(){
 
-    let save =
-        localStorage.getItem(
-            "calebSaveV2"
-        );
+    const save =
+    localStorage.getItem(
+        SAVE_KEY
+    );
 
-    if(!save)
-        return;
+    if(!save) return;
 
-    let data =
-        JSON.parse(save);
+    const data =
+    JSON.parse(save);
 
     game =
-        data.game;
+    data.game;
 
-    foodMultiplier =
-        data.foodMultiplier || 1;
+    data.buildings.forEach(
+        saved=>{
 
-    data.buildings.forEach(saved=>{
+        const building =
+        buildings.find(
+        b=>b.id===saved.id
+        );
 
-        let building =
-            buildings.find(
-                b=>b.id===saved.id
-            );
+        if(building){
 
-        if(building)
             building.owned =
-                saved.owned;
+            saved.owned;
+
+        }
+
     });
 
-    if(data.achievements){
-
-        data.achievements.forEach(
-            (saved,index)=>{
-
-            achievements[index]
-                .unlocked =
-                    saved.unlocked;
-        });
-    }
-
-    let offlineSeconds =
-        (
-        Date.now() -
-        data.saveTime
-        ) / 1000;
+    const offline =
+    (
+    Date.now() -
+    data.saveTime
+    ) / 1000;
 
     game.food +=
-        foodPerSecond() *
-        offlineSeconds;
+    foodPerSecond() *
+    offline;
+
+    showNotification(
+        "Offline earnings collected!"
+    );
 }
 
 setInterval(()=>{
 
-    let gain =
-        foodPerSecond();
+    const gain =
+    foodPerSecond();
 
     game.food += gain;
 
@@ -355,16 +377,10 @@ setInterval(()=>{
 },1000);
 
 setInterval(
-    saveGame,
-    5000
+saveGame,
+5000
 );
 
-window.buyBuilding =
-    buyBuilding;
-
-window.buyDoubleFood =
-    buyDoubleFood;
-
 loadGame();
-
+renderBuildings();
 updateUI();
