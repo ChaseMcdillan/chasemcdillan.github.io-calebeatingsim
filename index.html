@@ -7,29 +7,35 @@
 </head>
 <body>
 
-<div id="game">
+<h1>🍔 Caleb Eating Sim 🍕</h1>
 
-    <h1>🍔 Caleb Eating Sim 🍕</h1>
+<div class="panel">
 
-    <div class="stats">
-        <h2>Food: <span id="food">0</span></h2>
-        <h3>Food/sec: <span id="fps">0</span></h3>
-        <h3>Total Eaten: <span id="eaten">0</span></h3>
-        <h3>Ferraris: <span id="ferraris">0</span></h3>
-    </div>
+    <h2>Food: <span id="food">0</span></h2>
 
-    <button id="eatBtn">Eat 1 Food</button>
+    <p>Food/sec: <span id="fps">0</span></p>
 
-    <h2>Buildings</h2>
+    <p>Total Eaten: <span id="eaten">0</span></p>
 
-    <div id="buildings"></div>
-    <h2>Ferrari Shop</h2>
+    <p>Ferraris: <span id="ferraris">0</span></p>
+
+    <p>Reputation: <span id="reputation">0</span></p>
+
+</div>
+
+<button id="eatBtn">
+    Eat 1 Food
+</button>
+
+<h2>Buildings</h2>
+
+<div id="buildings"></div>
+
+<h2>Ferrari Shop</h2>
 
 <button onclick="buyDoubleFood()">
     x2 Food Production (25 Ferraris)
 </button>
-
-</div>
 
 <script src="main.js"></script>
 
