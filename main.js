@@ -1,4 +1,23 @@
-const buildings = [
+const achievements = [
+{
+    id: "eat100",
+    unlocked: false,
+    reward: 1,
+    condition: () => game.totalEaten >= 100
+},
+{
+    id: "eat1000",
+    unlocked: false,
+    reward: 5,
+    condition: () => game.totalEaten >= 1000
+},
+{
+    id: "eat10000",
+    unlocked: false,
+    reward: 25,
+    condition: () => game.totalEaten >= 10000
+}
+];
 const buildings = [
 {
     id: "lemonade",
@@ -91,6 +110,8 @@ function updateUI() {
 
     document.getElementById("eaten").textContent =
         game.totalEaten;
+    document.getElementById("ferraris").textContent =
+    game.ferraris;
 
     const container =
         document.getElementById("buildings");
@@ -147,8 +168,10 @@ document
 
         game.food--;
         game.totalEaten++;
+        game.reputation += 0.01;
 
-        updateUI();
+        checkAchievements();
+updateUI();;
     }
 });
 
@@ -171,7 +194,26 @@ function saveGame() {
         })
     );
 }
+function checkAchievements() {
 
+    achievements.forEach(a => {
+
+        if(a.unlocked) return;
+
+        if(a.condition()) {
+
+            a.unlocked = true;
+
+            game.ferraris += a.reward;
+
+            alert(
+                "Achievement Unlocked!\n+" +
+                a.reward +
+                " Ferraris"
+            );
+        }
+    });
+}
 function loadGame() {
 
     const save =
