@@ -3,14 +3,19 @@
 const SAVE_KEY = "calebEatingSimV03";
 
 let game = {
-    food: 0,
-    ferraris: 0,
-    reputation: 0,
-    totalEaten: 0,
-    totalGenerated: 0,
-    debt: 0,
-    prestiges: 0,
-    foodMultiplier: 1
+    food:0,
+    ferraris:0,
+    reputation:0,
+    totalEaten:0,
+    totalGenerated:0,
+    debt:0,
+    prestiges:0,
+    foodMultiplier:1,
+
+    walmartInvestment:0,
+    walmartTimer:0,
+
+    stockCash:0
 };
 
 const buildings = [
@@ -63,12 +68,50 @@ const buildings = [
     owned:0
 },
 {
+    {
     id:"fleet",
     name:"Food Truck Fleet",
     image:"assets/fleet.png",
     cost:250000,
     income:600,
     owned:0
+},
+
+{
+    id:"bank",
+    name:"Bank",
+    image:"assets/bank.png",
+    cost:500000,
+    income:1500,
+    owned:0
+},
+
+{
+    id:"stockmarket",
+    name:"Stock Exchange",
+    image:"assets/stockmarket.png",
+    cost:1000000,
+    income:2500,
+    owned:0
+},
+
+{
+    id:"casino",
+    name:"Casino",
+    image:"assets/bank.png",
+    cost:250000,
+    income:800,
+    owned:0
+},
+
+{
+    id:"buffetempire",
+    name:"Buffet Empire",
+    image:"assets/buffetempire.png",
+    cost:100000000,
+    income:50000,
+    owned:0
+}
 }
 ];
 
@@ -382,5 +425,143 @@ saveGame,
 );
 
 loadGame();
+setInterval(()=>{
+
+    if(game.debt > 0){
+
+        game.debt *= 1.001;
+
+    }
+
+},5000);
+function walmartInvest(){
+
+    let amount =
+    Number(
+        document.getElementById(
+        "walmartAmount"
+        ).value
+    );
+
+    if(amount <= 0)
+        return;
+
+    if(game.food < amount)
+        return;
+
+    game.food -= amount;
+
+    game.walmartInvestment +=
+    amount * 1.5;
+
+    game.walmartTimer =
+    60;
+
+    showNotification(
+    "Investment started."
+    );
+
+    updateUI();
+}
+
+window.walmartInvest =
+walmartInvest;
+setInterval(()=>{
+
+    if(game.walmartTimer > 0){
+
+        game.walmartTimer--;
+
+        if(
+        game.walmartTimer <= 0
+        ){
+
+            game.food +=
+            game.walmartInvestment;
+
+            showNotification(
+            "Walmart investment matured!"
+            );
+
+            game.walmartInvestment =
+            0;
+        }
+    }
+
+},1000);
+function takeLoan(amount){
+
+    game.food += amount;
+
+    game.debt +=
+    amount * 1.2;
+
+    showNotification(
+    "Loan approved."
+    );
+
+    updateUI();
+}
+
+window.takeLoan =
+takeLoan;
+function repayLoan(){
+
+    if(
+    game.food <
+    game.debt
+    )
+    return;
+
+    game.food -=
+    game.debt;
+
+    game.debt = 0;
+
+    showNotification(
+    "Debt repaid."
+    );
+
+    updateUI();
+}
+
+window.repayLoan =
+repayLoan;
+setInterval(()=>{
+
+    let roll =
+    Math.random();
+
+    if(roll < 0.05){
+
+        game.food += 500;
+
+        showNotification(
+        "🍅 Giant Tomato +500 Food"
+        );
+
+    }
+
+    else if(roll < 0.07){
+
+        game.ferraris += 2;
+
+        showNotification(
+        "🏆 Eating Contest +2 Ferraris"
+        );
+
+    }
+
+    else if(roll < 0.09){
+
+        game.food *= 0.95;
+
+        showNotification(
+        "🐀 Rats Ate Supplies"
+        );
+
+    }
+
+},30000);
 renderBuildings();
 updateUI();
