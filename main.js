@@ -1,4 +1,5 @@
 const buildings = [
+const buildings = [
 {
     id: "lemonade",
     name: "Lemonade Stand",
@@ -26,12 +27,30 @@ const buildings = [
     baseCost: 2000,
     income: 20,
     owned: 0
+},
+{
+    id: "grocery",
+    name: "Grocery Store",
+    baseCost: 10000,
+    income: 75,
+    owned: 0
+},
+{
+    id: "fleet",
+    name: "Food Truck Fleet",
+    baseCost: 250000,
+    income: 600,
+    owned: 0
 }
 ];
 
 let game = {
     food: 0,
-    totalEaten: 0
+    ferraris: 0,
+    reputation: 0,
+    debt: 0,
+    totalEaten: 0,
+    totalGenerated: 0
 };
 
 function buildingCost(building) {
