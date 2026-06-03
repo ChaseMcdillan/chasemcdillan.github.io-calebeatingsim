@@ -142,3 +142,42 @@ setInterval(() => {
 }, 1000);
 
 updateUI();
+function saveGame() {
+
+    localStorage.setItem(
+        "calebSave",
+        JSON.stringify({
+            game,
+            buildings
+        })
+    );
+}
+
+function loadGame() {
+
+    const save =
+        localStorage.getItem("calebSave");
+
+    if(!save) return;
+
+    const data =
+        JSON.parse(save);
+
+    game = data.game;
+
+    data.buildings.forEach(saved => {
+
+        const building =
+            buildings.find(
+                b => b.id === saved.id
+            );
+
+        if(building)
+            building.owned =
+                saved.owned;
+    });
+}
+
+loadGame();
+
+setInterval(saveGame, 5000);
